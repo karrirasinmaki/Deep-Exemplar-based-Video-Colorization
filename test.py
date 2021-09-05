@@ -130,12 +130,15 @@ if __name__ == "__main__":
         "--frame_propagate", default=False, type=bool, help="propagation mode, , please check the paper"
     )
     parser.add_argument("--image_size", type=int, default=[216 * 2, 384 * 2], help="the image size, eg. [216,384]")
+    parser.add_argument("--image_size_h", type=int, default=384 * 2, help="the image height, eg. 216")
+    parser.add_argument("--image_size_w", type=int, default=216 * 2, help="the image width, eg. 384")
     parser.add_argument("--cuda", action="store_false")
     parser.add_argument("--gpu_ids", type=str, default="0", help="separate by comma")
     parser.add_argument("--clip_path", type=str, default="./sample_videos/clips/v32", help="path of input clips")
     parser.add_argument("--ref_path", type=str, default="./sample_videos/ref/v32", help="path of refernce images")
     parser.add_argument("--output_path", type=str, default="./sample_videos/output", help="path of output clips")
     opt = parser.parse_args()
+    opt.image_size = [opt.image_size_h, opt.image_size_w]
     opt.gpu_ids = [int(x) for x in opt.gpu_ids.split(",")]
     cudnn.benchmark = True
     print("running on GPU", opt.gpu_ids)
